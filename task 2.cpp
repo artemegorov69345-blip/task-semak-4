@@ -16,11 +16,7 @@ int main() {
         return 1;
     }
     cout << "Введите " << nV << " чисел: ";
-    for (int i = 0; i < nV; ++i) {
-        int x;
-        cin >> x;
-        V.push_back(x);
-    }
+    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(V));
 
     deque<int> D;
     int nD;
@@ -30,11 +26,7 @@ int main() {
         return 1;
     }
     cout << "Введите " << nD << " чисел: ";
-    for (int i = 0; i < nD; ++i) {
-        int x;
-        cin >> x;
-        D.push_back(x);
-    }
+    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(D));
 
     list<int> L;
     int nL;
@@ -44,11 +36,7 @@ int main() {
         return 1;
     }
     cout << "Введите " << nL << " чисел: ";
-    for (int i = 0; i < nL; ++i) {
-        int x;
-        cin >> x;
-        L.push_back(x);
-    }
+    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(L));
 
     V.front() *= 2;
     V[V.size() / 2] *= 2;
