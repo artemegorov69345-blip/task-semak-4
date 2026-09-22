@@ -24,7 +24,6 @@ int main() {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    // Дальше всё остаётся без изменений
     multiset<int> M1(V1.begin(), V1.end());
     multiset<int> M2(V2.begin(), V2.end());
     multiset<int> M;
