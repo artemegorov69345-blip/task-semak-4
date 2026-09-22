@@ -24,7 +24,6 @@ int main() {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    // Дальше ваш код без изменений (с учётом того, что векторы могут быть разной длины)
     size_t n = min(V1.size(), V2.size());
     transform(V1.begin(), V1.begin() + n, V2.begin(), V2.begin(), multiplies<int>());
 
