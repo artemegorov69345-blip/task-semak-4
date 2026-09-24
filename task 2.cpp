@@ -1,61 +1,77 @@
-#include <iostream>
-#include <vector>
-#include <deque>
-#include <list>
-#include <algorithm>
-#include <iterator>
+#include <iostream> 
+#include <list>  
+#include <iterator>  
 
 using namespace std;
 
-// Умножает первый, средний и последний элементы контейнера на 2
-template <typename Container>
-void modifyMiddleElements(Container& c) {
-    c.front() *= 2;
-    auto it = c.begin();
-    advance(it, c.size() / 2);
-    *it *= 2;
-    c.back() *= 2;
+/**
+ * @brief выводит элементы списка в консоль
+ * @param L - список целых чисел для вывода
+ */
+void print_list(const list<int>& L);
+
+/**
+ * @brief удаляет элементы с нечетными порядковыми номерами из первой половины списка
+ * @param L - список для обработки (изменяется)
+ * @details Функция находит середину списка и удаляет каждый второй элемент
+ *          из первой половины, начиная с первого.
+ *          Порядковые номера считаются с 1, поэтому удаляются элементы
+ *          с номерами 1, 3, 5... (индексы 0, 2, 4... в C++).
+ *          Используется функция-член erase с выражением i++,
+ *          возвращаемое значение не сохраняется, в конце итерации
+ *          выполняется дополнительный инкремент ++i.
+ */
+void del_first_half_odd_indexes(list<int>& L);
+
+/**
+ * @brief точка входа в программу
+ * @return 0, если программа выполнена корректно
+ * @details Пользователь вводит список чисел (количество должно быть кратно 4),
+ *          программа выводит исходный список,
+ *          применяет алгоритм удаления и выводит результат
+ */
+int main() {
+    list<int> L;
+
+    cout << "Введите числа (количество должно быть кратно 4, завершите Ctrl+D/Ctrl+Z): ";
+    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(L));
+
+    // Проверяем, что размер кратен 4 
+    if (L.size() % 4 != 0) {
+        cout << "Ошибка: количество чисел должно быть кратно 4!" << endl;
+        cout << "Введено: " << L.size() << " чисел" << endl;
+        return 1;
+    }
+
+    print_list(L);                       // вывод исходных данных  
+    del_first_half_odd_indexes(L);       // алгоритм по заданию 31 
+    print_list(L);                       // вывод результата  
+
+    return 0;
 }
 
-// Выводит контейнер на экран с подписью
-template <typename Container>
-void printContainer(const Container& c, const string& name) {
-    cout << name << ": ";
-    for_each(c.begin(), c.end(), [](int n) {
-        cout << n << " ";
-    });
+/**
+ * @brief выводит элементы списка в консоль
+ * @param L - список целых чисел для вывода
+ */
+void print_list(const list<int>& L) {
+    for (const int& i : L) {
+        cout << i << ' ';
+    }
     cout << endl;
 }
 
-int main() {
-    vector<int> V;
-    int nV;
-    cout << "Введите размер вектора (нечетное, >=3): ";
-    cin >> nV;
-    cout << "Введите " << nV << " чисел: ";
-    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(V));
-
-    deque<int> D;
-    int nD;
-    cout << "Введите размер дека (нечетное, >=3): ";
-    cin >> nD;
-    cout << "Введите " << nD << " чисел: ";
-    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(D));
-
-    list<int> L;
-    int nL;
-    cout << "Введите размер списка (нечетное, >=3): ";
-    cin >> nL;
-    cout << "Введите " << nL << " чисел: ";
-    copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(L));
-
-    modifyMiddleElements(V);
-    modifyMiddleElements(D);
-    modifyMiddleElements(L);
-
-    printContainer(V, "Вектор");
-    printContainer(D, "Дек");
-    printContainer(L, "Список");
-
-    return 0;
+/**
+ * @brief удаляет элементы с нечетными порядковыми номерами из первой половины списка
+ * @param L - список для обработки (изменяется)
+ * @details Использует функцию-член erase с выражением i++,
+ *          возвращаемое значение не сохраняется.
+ *          В конце каждой итерации выполняется дополнительный инкремент ++i.
+ */
+void del_first_half_odd_indexes(list<int>& L) {
+    auto end = L.begin();
+    advance(end, L.size() / 2);
+    for (auto it = L.begin(); it != end; ++it) {
+        it = L.erase(it);   // удаляем текущий элемент, it указывает на следующий 
+    }
 }
